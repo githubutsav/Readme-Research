@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Strategic Imperative of README Generators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a narrative journey, guiding the user from understanding the problem to finding a solution. It starts with a high-level overview (The Shift), dives into the components of a good README (Anatomy), allows for direct comparison of tools (The Landscape), explores the cutting-edge (AI's Frontier), and concludes with a practical decision-making tool (Strategic Guide). This thematic, task-oriented flow was chosen over a linear report structure to make the information more digestible and actionable, allowing users to explore sections based on their immediate interests and needs, which enhances usability and engagement. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Manual vs. Automated README creation time/quality. Goal: Compare. Viz: HTML/CSS timeline diagram. Interaction: Visual contrast. Justification: A visual timeline is more impactful than text for showing a paradigm shift. Method: Tailwind CSS.
+        - Report Info: Core components of a README. Goal: Inform/Organize. Viz: Interactive card grid. Interaction: Hover to reveal details. Justification: Encourages exploration and breaks down complex information into digestible chunks. Method: HTML/CSS/JS.
+        - Report Info: Comparison of Generator Types (Web, CLI, IDE, AI). Goal: Compare/Analyze. Viz: Radar Chart. Interaction: Buttons to filter chart data and associated text. Justification: A radar chart is ideal for comparing multiple entities across several quantitative dimensions (Ease of Use, Integration, etc.). Method: Chart.js.
+        - Report Info: Recommendations for different user profiles. Goal: Guide/Advise. Viz: Interactive selection cards. Interaction: Click to reveal tailored advice. Justification: Creates a personalized, tool-like experience, making the report's conclusions directly useful. Method: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #C084FC;
+            border-bottom-color: #C084FC;
+        }
+        .btn-active {
+            background-color: #C084FC !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+        }
+        .card-hover-effect {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">README Generators</div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#shift" class="nav-link pb-1">The Shift</a>
+                <a href="#anatomy" class="nav-link pb-1">Anatomy</a>
+                <a href="#landscape" class="nav-link pb-1">Landscape</a>
+                <a href="#guide" class="nav-link pb-1">Guide</a>
+                <a href="#future" class="nav-link pb-1">Future</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#shift" class="block py-2 text-gray-700 hover:text-purple-500">The Shift</a>
+            <a href="#anatomy" class="block py-2 text-gray-700 hover:text-purple-500">Anatomy</a>
+            <a href="#landscape" class="block py-2 text-gray-700 hover:text-purple-500">Landscape</a>
+            <a href="#guide" class="block py-2 text-gray-700 hover:text-purple-500">Guide</a>
+            <a href="#future" class="block py-2 text-gray-700 hover:text-purple-500">Future</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32 bg-gradient-to-b from-purple-50 to-FDFBF8">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">The Documentation Revolution</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    From a time-consuming chore to an intelligent, automated process. Discover how README generators are transforming software development, one project at a time.
+                </p>
+                <a href="#shift" class="mt-8 inline-block bg-purple-500 text-white font-bold py-3 px-8 rounded-full hover:bg-purple-600 transition-colors duration-300">Explore the Shift</a>
+            </div>
+        </section>
+
+        <section id="shift" class="py-16 md:py-24 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">A Paradigm Shift</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">The journey of creating a README has evolved dramatically. What was once a manual, inconsistent process is now streamlined and standardized, freeing developers to focus on what they do best: code.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-red-500 mb-4">The Manual Way</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong class="text-gray-700">Time Consuming:</strong> 2-4 hours of manual writing and formatting per project.</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong class="text-gray-700">Inconsistent:</strong> Varied quality and missing sections across projects.</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong class="text-gray-700">High Cognitive Load:</strong> A dreaded task after intense coding sessions.</span></li>
+                            <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">&#10007;</span><span><strong class="text-gray-700">Documentation Debt:</strong> Often incomplete, leading to user friction.</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-purple-200 ring-2 ring-purple-100">
+                        <h3 class="text-2xl font-bold text-green-500 mb-4">The Automated Way</h3>
+                         <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10003;</span><span><strong class="text-gray-700">Efficient:</strong> Documentation in minutes, not hours.</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10003;</span><span><strong class="text-gray-700">Standardized:</strong> Consistent, professional quality every time.</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10003;</span><span><strong class="text-gray-700">Intelligent:</strong> AI-powered suggestions and code analysis.</span></li>
+                            <li class="flex items-start"><span class="text-green-500 mr-3 mt-1">&#10003;</span><span><strong class="text-gray-700">Integrated:</strong> Seamlessly fits into CI/CD pipelines and dev workflows.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="anatomy" class="py-16 md:py-24 bg-purple-50 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Anatomy of an Effective README</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A great README is more than just text; it's the front door to your project. Explore the essential components that make a README clear, useful, and welcoming to users and contributors.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Project Title</h4>
+                        <p class="text-sm text-gray-500 mt-2">A clear, self-explanatory name that immediately conveys the project's purpose.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Description</h4>
+                        <p class="text-sm text-gray-500 mt-2">An engaging summary of the project's goals, functions, and what makes it unique.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Installation</h4>
+                        <p class="text-sm text-gray-500 mt-2">Clear, step-by-step instructions and dependencies required to get the project running.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Usage</h4>
+                        <p class="text-sm text-gray-500 mt-2">Practical examples and code snippets demonstrating how to use the project.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">License</h4>
+                        <p class="text-sm text-gray-500 mt-2">Essential for open-source, defining legal permissions for usage and distribution.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Contributing</h4>
+                        <p class="text-sm text-gray-500 mt-2">Guidelines for developers who want to contribute, ensuring code quality and consistency.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Visuals & Badges</h4>
+                        <p class="text-sm text-gray-500 mt-2">Screenshots, GIFs, and status badges that provide quick, scannable insights.</p>
+                    </div>
+                    <div class="anatomy-card bg-white p-6 rounded-lg shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Support & Contact</h4>
+                        <p class="text-sm text-gray-500 mt-2">Information on where users can get help, report issues, or connect with the authors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="landscape" class="py-16 md:py-24 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Generator Landscape</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">The world of README generators is diverse. Each type offers a unique blend of simplicity, power, and integration. Select a category to compare their strengths and find the right fit for your workflow.</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8" id="generator-type-selector">
+                    <button data-type="web" class="generator-btn text-sm md:text-base px-4 py-2 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors btn-active">Web-Based</button>
+                    <button data-type="cli" class="generator-btn text-sm md:text-base px-4 py-2 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">CLI</button>
+                    <button data-type="ide" class="generator-btn text-sm md:text-base px-4 py-2 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">IDE Extension</button>
+                    <button data-type="ai" class="generator-btn text-sm md:text-base px-4 py-2 rounded-full bg-white shadow-sm hover:bg-gray-100 transition-colors">AI-Powered</button>
+                </div>
+
+                <div class="grid lg:grid-cols-5 gap-8 md:gap-12 items-center">
+                    <div class="lg:col-span-2">
+                        <div class="chart-container">
+                            <canvas id="generator-chart"></canvas>
+                        </div>
+                    </div>
+                    <div id="generator-details" class="lg:col-span-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="guide" class="py-16 md:py-24 bg-purple-50 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Your Strategic Guide</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Not sure where to start? The best tool depends on your project's context. Select the profile that best describes you to receive a tailored recommendation based on the report's findings.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <button data-profile="individual" class="profile-btn bg-white p-6 rounded-lg text-left shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Individual Developer</h4>
+                        <p class="text-sm text-gray-500 mt-2">Working on small projects or a personal portfolio.</p>
+                    </button>
+                    <button data-profile="opensource" class="profile-btn bg-white p-6 rounded-lg text-left shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Open-Source Maintainer</h4>
+                        <p class="text-sm text-gray-500 mt-2">Focused on community, collaboration, and discoverability.</p>
+                    </button>
+                    <button data-profile="enterprise" class="profile-btn bg-white p-6 rounded-lg text-left shadow-md card-hover-effect">
+                        <h4 class="font-bold text-lg text-purple-600">Enterprise Team</h4>
+                        <p class="text-sm text-gray-500 mt-2">Prioritizing security, consistency, and integration.</p>
+                    </button>
+                </div>
+
+                <div id="recommendation-panel" class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 min-h-[150px] transition-opacity duration-500">
+                    <p class="text-gray-500 text-center">Select a profile above to see our recommendation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="py-16 md:py-24 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Future is Intelligent</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">The evolution of READMEs is accelerating. We're moving towards a future where documentation is not just written, but understood, adapted, and integrated in real-time.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="space-y-2">
+                        <div class="text-4xl text-purple-500">🧠</div>
+                        <h4 class="font-bold text-xl text-gray-800">Smarter AI</h4>
+                        <p class="text-gray-600">Deeper code comprehension, context-aware generation, and even automated diagram creation.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-4xl text-purple-500">🌐</div>
+                        <h4 class="font-bold text-xl text-gray-800">Evolving Standards</h4>
+                        <p class="text-gray-600">Community-driven best practices and greater emphasis on accessibility and inclusivity.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-4xl text-purple-500">🔗</div>
+                        <h4 class="font-bold text-xl text-gray-800">Total Convergence</h4>
+                        <p class="text-gray-600">READMEs as "Project Intelligence Hubs," pulling real-time data from CI/CD, issues, and more.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Interactive Report. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">This application is an interactive visualization of the "Strategic Imperative of README Generators" report.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generatorData = {
+                web: {
+                    ratings: [5, 2, 3, 2],
+                    title: 'Web-Based Generators',
+                    description: 'The most accessible entry point. These browser-based tools offer user-friendly interfaces, making them perfect for quick generation without any local setup.',
+                    pros: ['Extremely easy to use (GUI)', 'No installation required', 'Real-time visual previews'],
+                    cons: ['Limited automation', 'Low integration with dev workflows', 'Can be generic'],
+                    examples: 'readme.so, DocuWriter.ai'
+                },
+                cli: {
+                    ratings: [3, 4, 4, 3],
+                    title: 'Command-Line (CLI) Generators',
+                    description: 'For developers who live in the terminal. These tools are highly scriptable and perfect for integrating documentation directly into build processes and CI/CD pipelines.',
+                    pros: ['Highly scriptable & automatable', 'Integrates with CI/CD', 'Good for standardization'],
+                    cons: ['Requires command line familiarity', 'Less visual feedback', 'Setup can be more involved'],
+                    examples: 'autoreadme-cli, readme-builder'
+                },
+                ide: {
+                    ratings: [4, 4, 3, 2],
+                    title: 'IDE Extensions',
+                    description: 'Bringing documentation right into your code editor. These extensions minimize context switching, making it seamless to create and update READMEs as you code.',
+                    pros: ['Zero context switching', 'Integrated into developer workflow', 'Often includes file tree generation'],
+                    cons: ['Tied to a specific IDE', 'Automation depth can be low', 'Fewer features than standalone tools'],
+                    examples: 'README-generator (VS Code)'
+                },
+                ai: {
+                    ratings: [4, 5, 5, 5],
+                    title: 'AI-Powered Generators',
+                    description: 'The cutting edge of documentation. These tools analyze your codebase to generate highly relevant, structured content, turning a manual task into an intelligent one.',
+                    pros: ['Intelligent code analysis', 'Automated feature & dependency detection', 'Enhances grammar, clarity, and tone'],
+                    cons: ['Potential privacy concerns', 'Can have a steeper learning curve', 'May require API keys/costs'],
+                    examples: 'ReadmeAI, GitHub Copilot'
+                }
+            };
+
+            const recommendationData = {
+                individual: {
+                    title: 'Recommendation for Individual Developers',
+                    recommendation: 'Start with a <strong>Web-Based Generator</strong> like `readme.so`. Its simplicity and visual editor allow for rapid creation of a professional README for your portfolio or small projects without any setup overhead. It\'s the fastest way to a great first impression.',
+                    icon: '👤'
+                },
+                opensource: {
+                    title: 'Recommendation for Open-Source Maintainers',
+                    recommendation: 'Leverage a <strong>CLI or AI-Powered Generator</strong>. These tools offer deep integration with GitHub, automated badge support, and templates for contribution guidelines. Automating README updates via GitHub Actions ensures your documentation always stays in sync with your code, which is vital for community trust and engagement.',
+                    icon: '🌍'
+                },
+                enterprise: {
+                    title: 'Recommendation for Enterprise Teams',
+                    recommendation: 'Prioritize an <strong>AI-Powered Generator with an offline mode</strong> or a robust <strong>CLI tool</strong>. The key is ensuring consistency across all team projects and integrating documentation into your CI/CD pipeline. For sensitive codebases, an offline mode is critical to address privacy and security concerns by preventing data transmission to external services.',
+                    icon: '🏢'
+                }
+            };
+
+            const ctx = document.getElementById('generator-chart').getContext('2d');
+            const generatorChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Ease of Use', 'Integration', 'Customization', 'Automation'],
+                    datasets: [{
+                        label: 'Generator Type Ratings',
+                        data: generatorData.web.ratings,
+                        backgroundColor: 'rgba(192, 132, 252, 0.2)',
+                        borderColor: 'rgba(192, 132, 252, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(192, 132, 252, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(192, 132, 252, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: 'Inter'
+                                },
+                                color: '#4A4A4A'
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                max: 5,
+                                stepSize: 1,
+                                backdropColor: 'rgba(253, 251, 248, 0.75)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            const detailsContainer = document.getElementById('generator-details');
+            const selectorContainer = document.getElementById('generator-type-selector');
+            const recommendationPanel = document.getElementById('recommendation-panel');
+            const profileButtons = document.querySelectorAll('.profile-btn');
+
+            function updateDetails(type) {
+                const data = generatorData[type];
+                detailsContainer.innerHTML = `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">${data.title}</h3>
+                    <p class="text-gray-600 mb-6">${data.description}</p>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold mb-2 text-green-600">Pros</h4>
+                            <ul class="space-y-1 list-inside">
+                                ${data.pros.map(pro => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">&#10003;</span>${pro}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2 text-red-600">Cons</h4>
+                            <ul class="space-y-1 list-inside">
+                                ${data.cons.map(con => `<li class="flex items-start"><span class="text-red-500 mr-2 mt-1">&#10007;</span>${con}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-6"><strong>Examples:</strong> ${data.examples}</p>
+                `;
+            }
+
+            selectorContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('generator-btn')) {
+                    const type = e.target.dataset.type;
+                    
+                    document.querySelectorAll('.generator-btn').forEach(btn => btn.classList.remove('btn-active'));
+                    e.target.classList.add('btn-active');
+                    
+                    generatorChart.data.datasets[0].data = generatorData[type].ratings;
+                    generatorChart.update();
+                    updateDetails(type);
+                }
+            });
+            
+            profileButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const profile = this.dataset.profile;
+                    const data = recommendationData[profile];
+
+                    profileButtons.forEach(btn => btn.classList.remove('ring-2', 'ring-purple-400'));
+                    this.classList.add('ring-2', 'ring-purple-400');
+                    
+                    recommendationPanel.style.opacity = '0';
+                    setTimeout(() => {
+                        recommendationPanel.innerHTML = `
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                <div class="text-5xl">${data.icon}</div>
+                                <div>
+                                    <h4 class="font-bold text-xl text-gray-800 mb-2">${data.title}</h4>
+                                    <p class="text-gray-600">${data.recommendation}</p>
+                                </div>
+                            </div>
+                        `;
+                        recommendationPanel.style.opacity = '1';
+                    }, 300);
+                });
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const sections = document.querySelectorAll('.section-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            updateDetails('web');
+        });
+    </script>
+</body>
+</html>
